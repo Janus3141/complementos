@@ -5,6 +5,7 @@
 # Consigna: Implementar los siguientes metodos
 
 import sys
+import pprint
 
 grafo_adyacencia1 = (
     ["A", "B", "C", "D"], 
@@ -32,7 +33,8 @@ def leer_grafo_stdin():
 
 
 def imprime_grafo_lista(grafo):
-	print grafo
+	pprint.pprint(grafo)
+
 
 def lista_a_incidencia(grafo_lista):
 	matriz_incidencia = [[2 if vertice == arista[0] and  vertice == arista[1]
@@ -43,8 +45,7 @@ def lista_a_incidencia(grafo_lista):
 					]
 				for arista in grafo_lista[1]
 				]
-	matriz_incidencia = transp(matriz_incidencia)
-	return (grafo_lista[0], matriz_incidencia)
+	return (grafo_lista[0], transp(matriz_incidencia)
 
 
 def transp(matrix):
@@ -77,15 +78,15 @@ def imprime_grafo_incidencia(grafo_incidencia):
 
 
 def lista_a_adyacencia(grafo_lista):
-	return (grafo_lista[0], [x for x in zip(grafo_lista[0], grafo_lista[0]) if x in grafo_lista[1]])
+	return (grafo_lista[0],
+		[[1 if [x,y] in grafo_lista[1] else 0
+				for y in grafo_lista[0]]
+				for x in grafo_lista[0]]
+		)
 
 
 def adyacencia_a_lista(grafo_adyacencia):
-    '''
-    Transforma un grafo representado una matriz de adyacencia a su 
-    representacion por listas.
-    '''
-    pass
+	pass
 
 
 def imprime_grafo_adyacencia(grafo_adyacencia):
