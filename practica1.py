@@ -86,7 +86,12 @@ def lista_a_adyacencia(grafo_lista):
 
 
 def adyacencia_a_lista(grafo_adyacencia):
-	pass
+	grafo_lista = []
+	for vertice, row in grafo_adyacencia:
+		for i, arista in enumerate(row):
+			if arista == 1:
+				grafo_lista.append([vertice, grafo_adyacencia[i])
+	return (grafo_adyacencia[0], grafo_lista)
 
 
 def imprime_grafo_adyacencia(grafo_adyacencia):
