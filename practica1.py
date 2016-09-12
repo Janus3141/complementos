@@ -45,7 +45,7 @@ def lista_a_incidencia(grafo_lista):
 					]
 				for arista in grafo_lista[1]
 				]
-	return (grafo_lista[0], transp(matriz_incidencia)
+	return (grafo_lista[0], transp(matriz_incidencia))
 
 
 def transp(matrix):
@@ -87,10 +87,10 @@ def lista_a_adyacencia(grafo_lista):
 
 def adyacencia_a_lista(grafo_adyacencia):
 	grafo_lista = []
-	for vertice, row in grafo_adyacencia:
+	for vertice, row in zip(grafo_adyacencia[0], grafo_adyacencia[1]):
 		for i, arista in enumerate(row):
 			if arista == 1:
-				grafo_lista.append([vertice, grafo_adyacencia[i])
+				grafo_lista.append([vertice, grafo_adyacencia[0][i]])
 	return (grafo_adyacencia[0], grafo_lista)
 
 
@@ -103,27 +103,23 @@ def imprime_grafo_adyacencia(grafo_adyacencia):
 
 
 def leer_grafo_archivo(file_path):
-    '''
-    Lee un grafo desde un archivo y devuelve su representacion como lista.
-    Ejemplo Entrada: 
-        3
-        A
-        B
-        C
-        A B
-        B C
-        C B
-    Ejemplo retorno: 
-        (['A','B','C'],[('A','B'),('B','C'),('C','B')])
-    '''
-    pass
+	with open(file_path, mode='r') as file:
+		nvertices = int(file.readline().rstrip())
+		vertices = []
+		for i in range(nvertices):
+			vertices.append(file.readline().rstrip())
+		aristas = []
+		arista = (file.readline()).split()
+		while arista != []:
+			aristas.append(arista)
+			arista = (file.readline()).split()
+	return (vertices,aristas)
 
-
-
-if __name__ == "__main__":
-	graf = leer_grafo_stdin()
-	imprime_grafo_lista(graf)
-	graf = lista_a_incidencia(graf)
-	print(graf)
-	graf = incidencia_a_lista(graf)
-	print(graf)
+if __name__=='__main__':
+	gr = leer_grafo_archivo('g.txt')
+	imprime_grafo_lista(gr)
+	gr2 = lista_a_adyacencia(gr)
+	imprime_grafo_lista(gr2)
+	gr3 = adyacencia_a_lista(gr2)
+	imprime_grafo_lista(gr3)
+	
