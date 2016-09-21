@@ -14,7 +14,7 @@ def make_set(lista):
     a ser conjuntos unitarios. 
     Retorna un disjointSet
     '''
-    pass
+    return dict(zip(lista,range(len(lista))))
 
 
 def find(elem, disjoint_set):
@@ -22,7 +22,7 @@ def find(elem, disjoint_set):
     Obtiene el identificador correspondiente al conjunto al que pertenece 
     el elemento 'elem'
     '''
-    pass
+    return disjoint_set[elem]
 
 
 def union(id_1, id_2, disjoint_set):
@@ -30,7 +30,7 @@ def union(id_1, id_2, disjoint_set):
     Une los conjuntos con identificadores id_1, id_2.
     Retorna la estructura actualizada
     '''
-    pass
+    return {x:(disjoint_set[x] if disjoint_set[x] != id_2 else id_1) for x in disjoint_set}
 
 
 def componentes_conexas(grafo_lista):
@@ -39,7 +39,13 @@ def componentes_conexas(grafo_lista):
     Ejemplo formato salida: 
         [['a, 'b'], ['c'], ['d']]
     '''
-    pass
+    nodos, aristas = grafo_lista
+    ds = make_set(nodos)
+    for nodo1, nodo2 in aristas:
+	id1 = find(nodo1, ds)
+        id2 = find(nodo2, ds)
+        if id1 != id2:
+            ds = union(id1, id2, ds)
 
 
 

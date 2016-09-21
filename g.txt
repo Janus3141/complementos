@@ -2,7 +2,7 @@
 a
 b
 c
-a b
-a a
+a b 3
+a a 5.32
 b c
-c a
+c a 6
