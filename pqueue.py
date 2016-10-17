@@ -21,8 +21,7 @@ class pqueue():
             if (self.queue[i])[0] == x:
                 (self.queue[i])[1] == y
                 return
-        self.queue.append([x,y])
-        self.size += 1
+        raise KeyError
 
     def add(self, item, priority):
         self.queue.append([item,priority])
