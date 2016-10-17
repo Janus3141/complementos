@@ -18,12 +18,24 @@ def dijkstra(grafo, vertice):
     queue = pqueue.pqueue()
     nodos.remove(vertice)
     queue.add(vertice, 0)
+    result = dict()
     while queue.size > 0:
-        nodo = queue.pop()
+        nodo, dist = queue.pop()
+        result[nodo] = dist
         for i, arista in aristas:
-            if nodo in arista:
-                
-    return {}
+            if nodo == arista[0]:
+                nodo_dest = arista[1]
+            elif nodo == arista[1]:
+                nodo_dest = arista[0]
+            else:
+                continue
+            dist_dest = dist+arista[2]
+            if nodo_dest not in queue:
+                queue.add(nodo_dest, dist_dest)
+            elif queue[nodo_dest] > dist_dest:
+                queue[nodo_dest] = dist_dest
+            del aristas[i]
+    return result
 
 
 def dijkstra_2(grafo, vertice):
