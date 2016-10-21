@@ -19,7 +19,7 @@ class pqueue():
     def __setitem__(self, x, y):
         for i in range(1, self.size+1):
             if (self.queue[i])[0] == x:
-                (self.queue[i])[1] == y
+                (self.queue[i])[1] = y
                 return
         raise KeyError
 

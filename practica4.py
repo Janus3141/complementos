@@ -14,10 +14,9 @@ def dijkstra(grafo, vertice):
     Formato resultado: {'a': 10, 'b': 5, 'c': 0}
     (Nodos que no son claves significa que no hay camino a ellos)
     '''
-    nodos, aristas = grafo
-    nodos, aristas = nodos[:], aristas[:]
+    aristas = grafo[1]
+    aristas = aristas[:]
     queue = pqueue.pqueue()
-    nodos.remove(vertice)
     queue.add(vertice, 0)
     result = dict()
     while queue.size > 0:
@@ -26,7 +25,9 @@ def dijkstra(grafo, vertice):
         aristas2 = list() # Aristas no procesadas
         while len(aristas) != 0:
             a = aristas.pop()
-            if nodo == a[0]:
+            if a[0] == a[1]:
+                continue
+            elif nodo == a[0]:
                 nodo_dest = a[1]
             elif nodo == a[1]:
                 nodo_dest = a[0]
@@ -50,7 +51,34 @@ def dijkstra_2(grafo, vertice):
     Formato resultado: {'a': ['a'], 'b': ['a', 'b'], 'c': ['a', 'c']}
     (Nodos que no son claves significa que no hay camino a ellos)
     '''
-    return {}
+    aristas = grafo[1]
+    aristas = aristas[:]
+    queue = pqueue.pqueue()
+    queue.add(vertice, 0)
+    result = {vertice:[vertice]}
+    while queue.size > 0:
+        nodo, dist = queue.pop()
+        aristas2 = list() # Aristas no procesadas
+        while len(aristas) != 0:
+            a = aristas.pop()
+            if a[0] == a[1]:
+                continue
+            elif nodo == a[0]:
+                nodo_dest = a[1]
+            elif nodo == a[1]:
+                nodo_dest = a[0]
+            else:
+                aristas2.append(a)
+                continue
+            dist_dest = dist+a[2]
+            if nodo_dest not in queue:
+                queue.add(nodo_dest, dist_dest)
+                result[nodo_dest] = result[nodo]+[nodo_dest]
+            elif queue[nodo_dest] > dist_dest:
+                queue[nodo_dest] = dist_dest
+                result[nodo_dest] = result[nodo]+[nodo_dest]
+        aristas = aristas2
+    return result
 
 
 def main():
