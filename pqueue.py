@@ -21,8 +21,7 @@ class pqueue():
             if (self.queue[i])[0] == x:
                 (self.queue[i])[1] == y
                 return
-        self.queue.append([x,y])
-        self.size += 1
+        raise KeyError
 
     def add(self, item, priority):
         self.queue.append([item,priority])
@@ -47,7 +46,7 @@ class pqueue():
         self.size -= 1
         i = 1
         while i <= self.size//2:
-            if i*2 < self.size:
+            if i*2+1 <= self.size:
                 minimum = i*2 if (self.queue[i*2])[1] <= (self.queue[i*2+1])[1] else i*2+1
             else:
                 minimum = i*2
@@ -55,6 +54,7 @@ class pqueue():
                 temp = self.queue[i]
                 self.queue[i] = self.queue[minimum]
                 self.queue[minimum] = temp
+                i = minimum
             else:
                 break
         return a
