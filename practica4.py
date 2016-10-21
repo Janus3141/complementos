@@ -15,6 +15,7 @@ def dijkstra(grafo, vertice):
     (Nodos que no son claves significa que no hay camino a ellos)
     '''
     nodos, aristas = grafo
+    nodos, aristas = nodos[:], aristas[:]
     queue = pqueue.pqueue()
     nodos.remove(vertice)
     queue.add(vertice, 0)
@@ -22,19 +23,22 @@ def dijkstra(grafo, vertice):
     while queue.size > 0:
         nodo, dist = queue.pop()
         result[nodo] = dist
-        for i, arista in aristas:
-            if nodo == arista[0]:
-                nodo_dest = arista[1]
-            elif nodo == arista[1]:
-                nodo_dest = arista[0]
+        aristas2 = list() # Aristas no procesadas
+        while len(aristas) != 0:
+            a = aristas.pop()
+            if nodo == a[0]:
+                nodo_dest = a[1]
+            elif nodo == a[1]:
+                nodo_dest = a[0]
             else:
+                aristas2.append(a)
                 continue
-            dist_dest = dist+arista[2]
+            dist_dest = dist+a[2]
             if nodo_dest not in queue:
                 queue.add(nodo_dest, dist_dest)
             elif queue[nodo_dest] > dist_dest:
                 queue[nodo_dest] = dist_dest
-            del aristas[i]
+        aristas = aristas2
     return result
 
 
