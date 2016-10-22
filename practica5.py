@@ -4,8 +4,10 @@
 # Complementos Matematicos I
 # Consigna: Implementar los siguientes metodos
 
+
 import pqueue
 import unionfind
+
 
 def prim(grafo):
     '''
@@ -21,7 +23,7 @@ def prim(grafo):
     aristas_arbol = list()
     while queue.size != 0:
         arista, peso = queue.pop()
-        if aristas[0] in nodos_arbol and aristas[1] in nodos_arbol:
+        if arista[0] in nodos_arbol and arista[1] in nodos_arbol:
             continue
         else:
             nodos_arbol.add(arista[0])
@@ -29,13 +31,28 @@ def prim(grafo):
             aristas_arbol.append(arista)
     return [nodos[:], aristas_arbol]
 
+
 def kruskal(grafo):
     '''
     Dado un grafo (en formato de listas con pesos), aplica el algoritmo de 
     Kruskal y retorna el MST correspondiente (o un bosque, en el caso de que 
     no sea conexo).
     '''
-    pass
+    nodos, aristas = grafo
+    queue = pqueue.pqueue()
+    dset = unionfind.UnionFind()
+    for nodo in nodos:
+        dset[nodo]
+    for arista in aristas:
+        queue[arista[:2]] = arista[2]
+    aristas_arbol = list()
+    while queue.size > 0:
+        arista, peso = queue.pop()
+        a, b = arista
+        if a != b and dset[a] != dset[b]:
+            aristas_arbol.append((a,b,peso))
+            dset.union(a,b)
+    return [nodos[:], aristas_arbol]
 
 
 def main():

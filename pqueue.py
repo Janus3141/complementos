@@ -1,59 +1,63 @@
-class pqueue():
+class PQueue():
     def __init__(self):
-        self.queue = list()
-        self.queue.append('dummy')
-        self.size = 0
+        self._order = list()
+
+    def size(self):
+        return len(self._order)
+
+    def get(self,i):
+        return self._order[i-1]
+
+    def insert(self,i,j):
+        self._order[i-1] = j
 
     def __contains__(self, x):
-        for i in range(1, self.size+1):
-            if (self.queue[i])[0] == x:
+        for i in range(1, self.size()):
+            if (self.get(i))[0] == x:
                 return True
         return False
 
     def __getitem__(self, x):
-        for i in range(1, self.size+1):
-            if (self.queue[i])[0] == x:
-                return (self.queue[i])[1]
+        for i in range(1, self.size()):
+            if (self.get(i))[0] == x:
+                return (self.get(i))[1]
         raise KeyError
 
-    def __setitem__(self, x, y):
-        for i in range(1, self.size+1):
-            if (self.queue[i])[0] == x:
-                (self.queue[i])[1] = y
-                return
-        raise KeyError
-
-    def add(self, item, priority):
-        self.queue.append([item,priority])
-        self.size += 1
-        i = self.size//2
-        j = self.size
+    def __setitem__(self, item, priority):
+        self._order.append([item,priority])
+        i = self.size()//2
+        j = self.size()
         while i != 0:
-            if (self.queue[i])[1] > priority:
-                self.queue[j] = self.queue[i]
-                self.queue[i] = [item,priority]
+            if (self.get[i])[1] > priority:
+                self.insert(j, self.get(i))
+                self.insert(i, [item,priority])
                 j = i
                 i = j//2
             else:
                 break
 
-    def pop(self):
-        if self.size == 0:
-            raise IndexError("Empty queue.")
-        a = self.queue[1]
-        self.queue[1] = self.queue[self.size]
-        del self.queue[self.size]
-        self.size -= 1
+'''    def set_prior(self,item,priority):       Arreglar, implementar reordenamiento de array
+        for i in range(1, self.size()):
+            if (self.get(i))[0] == item:
+                self.insert(i, [item,priority])
+                return
+        raise KeyError
+'''
+    def deq(self):
+        if self.size() == 0:
+            raise IndexError("Empty queue")
+        a = self.get(1)
+        self.insert(1, self._order.pop(self.size()))
         i = 1
-        while i <= self.size//2:
-            if i*2+1 <= self.size:
-                minimum = i*2 if (self.queue[i*2])[1] <= (self.queue[i*2+1])[1] else i*2+1
+        while i <= self.size()//2:
+            if i*2+1 <= self.size():
+                minimum = i*2 if (self.get(i*2))[1] <= (self.get(i*2+1))[1] else i*2+1
             else:
                 minimum = i*2
-            if (self.queue[i])[1] > (self.queue[minimum])[1]:
-                temp = self.queue[i]
-                self.queue[i] = self.queue[minimum]
-                self.queue[minimum] = temp
+            if (self.get(i))[1] > (self.get(minimum))[1]:
+                temp = self.get(i)
+                self.insert(i, self.get(minimum))
+                self.insert(minimum, temp)
                 i = minimum
             else:
                 break
