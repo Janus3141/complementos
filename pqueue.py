@@ -9,7 +9,10 @@ class PQueue():
         return self._order[i-1]
 
     def insert(self,i,j):
-        self._order[i-1] = j
+        if i > 1:
+            self._order[i-1] = j
+        else:
+            self._order.append(j)
 
     def __contains__(self, x):
         for i in range(1, self.size()):
@@ -28,7 +31,7 @@ class PQueue():
         i = self.size()//2
         j = self.size()
         while i != 0:
-            if (self.get[i])[1] > priority:
+            if (self.get(i))[1] > priority:
                 self.insert(j, self.get(i))
                 self.insert(i, [item,priority])
                 j = i
@@ -36,13 +39,13 @@ class PQueue():
             else:
                 break
 
-'''    def set_prior(self,item,priority):       Arreglar, implementar reordenamiento de array
-        for i in range(1, self.size()):
-            if (self.get(i))[0] == item:
-                self.insert(i, [item,priority])
-                return
-        raise KeyError
-'''
+    '''    def set_prior(self,item,priority):       Arreglar, implementar reordenamiento de array
+            for i in range(1, self.size()):
+                if (self.get(i))[0] == item:
+                    self.insert(i, [item,priority])
+                    return
+            raise KeyError
+    '''
     def deq(self):
         if self.size() == 0:
             raise IndexError("Empty queue")
