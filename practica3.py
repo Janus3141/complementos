@@ -14,6 +14,8 @@
 #                http://cytoscape.org/
 # elementTree  : http://docs.python.org/2/library/xml.etree.elementtree.html 
 
+from pygraphml import Graph
+from pygraphml import GraphMLParser
 
 def leer_grafo_peso_stdin():
     '''
@@ -94,8 +96,16 @@ def lee_graphml(file_path):
     Lee un grafo en formato graphML usando la libreria pygraphMl, 
     y lo devuelve como lista con pesos
     '''
-    pass
-
+    parser = GraphMLParser()
+    graph = parser.parse(file_path)
+    nodes = [node.attributes()['label'].value for node in graph.nodes()]
+    edges = [ [edge.node1.attributes()['label'].value,
+                edge.node2.attributes()['label'].value,
+                edge.attributes()['weight'].value
+                if 'weight' in edge.attributes().keys() else None]
+                for edge in graph.edges() ]
+    return (nodes, edges)
+    
 
 def lee_graphml_2(file_path):
     '''
@@ -110,7 +120,7 @@ def lee_graphml_2(file_path):
 
 
 def main():
-    g = leer_grafo_peso_archivo('g.txt')
+    g = lee_graphml('newG.graphml')
     imprime_grafo_peso_lista(g)
 
 if __name__ == '__main__':
