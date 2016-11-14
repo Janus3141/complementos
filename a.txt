@@ -1,0 +1,15 @@
+calcular_fuerzas_repulsion(posiciones, nodos, acum_fuerza):
+
+	para cada par de nodos N1, N2 en nodos:
+
+		pos_n1 = posiciones[N1]
+
+		pos_n2 = posiciones[N2]
+
+		dist = sqrt((pos_n1.x - pos_n2.x)^2 + (pos_n1.y - pos_n2.y)^2))
+
+		mod_fuerza = fr(dist)
+
+		aux = N1 - N2
+
+		F = aux/dist * mod_fuerza
