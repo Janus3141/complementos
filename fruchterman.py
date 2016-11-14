@@ -7,7 +7,7 @@ class point:
     def __init__(self, posx = 0, posy = 0):
         self.x = posx
         self.y = posy
-    def __sum__(self,other):
+    def __add__(self,other):
         return point(self.x + other.x, self.y + other.y)
     def __mul__(self,scalar):
         return point(self.x * scalar, self.y * scalar)
@@ -19,16 +19,16 @@ class point:
 
 def fruchterman(X, Y, G):
     area = X*Y
-    k = sqrt(area/len(G[0]))
+    k = 0.5*sqrt(area/len(G[0]))
     V, E = G
+    temp = X / 5
     position = random_start(X, Y, V)
-    temp = X / 20
-    for i in range(algunrange):
+    for i in range(100):
+        yield position
         accum = calc_rep_forces(position,k)
         accum = calc_attract_forces(position,E,k,accum)
         position = calc_position(position, accum, temp, X, Y)
         temp = cool(temp)
-        draw(position)
 
 
 def random_start(x, y, v):
@@ -42,7 +42,7 @@ def calc_rep_forces(position,k):
     accum = dict()
     for v in position:
         accum[v] = point()
-    for a,b in combinations(position.keys()):
+    for a,b in combinations(position.keys(), 2):
         # Calculo para a
         delta = position[a] - position[b]
         delta_abs = delta.x**2 + delta.y**2
@@ -76,6 +76,3 @@ def calc_position(position, accum, temp, w, l):
 def cool(t):
     return t*3/4
 
-
-def draw(pos):
-    pass
