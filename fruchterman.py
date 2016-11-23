@@ -21,10 +21,10 @@ def fruchterman(X, Y, G):
     area = X*Y
     k = 0.5*sqrt(area/len(G[0]))
     V, E = G
-    temp = X / 5
+    temp = X / 4
     position = random_start(X, Y, V)
-    for i in range(100):
-        yield position
+    while temp > 10**-3:
+        yield (position,temp)
         accum = calc_rep_forces(position,k)
         accum = calc_attract_forces(position,E,k,accum)
         position = calc_position(position, accum, temp, X, Y)
@@ -74,5 +74,5 @@ def calc_position(position, accum, temp, w, l):
 
 
 def cool(t):
-    return t*3/4
+    return t*7/8
 
