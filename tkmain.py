@@ -35,7 +35,7 @@ class Root(tk.Tk):
         self.graph = [vertex, edges]
         # x,y = 60*len(vertex), 40*len(vertex)
         # self.canv.config(width = x, height = y)
-        self.positions = fr.fruchterman(800-32,500-32,self.graph)
+        self.positions = fr.Fruchterman(800-32, 500-32, self.graph)
         self.draw()
         self.startb.config(state='normal')
         self.stepb.config(state='normal')
